@@ -13,6 +13,10 @@
 - `welcome_continue_pressed` and `welcome_login_pressed` are intentionally pre-commit.
 - `onboarding_intro_completed` and later onboarding steps are post-commit and can use `user_analytics_id`.
 - Do not silently mix `distinct_id` and `user_analytics_id` in one metric without saying where the identity handoff happens.
+- For stitched onboarding metrics, define the handoff timestamp explicitly:
+  - regular new-user flow: first event after onboarding entry with a non-empty `user_analytics_id`
+  - login-then-auto-create flow: `account_auth_completed` with `source = 'onboarding'` and `needs_profile_setup = true`
+- After the handoff timestamp, retention and downstream lifecycle logic should prefer `user_analytics_id` over the original anonymous `distinct_id`.
 
 ## Minimum trustworthy version
 
