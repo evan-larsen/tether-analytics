@@ -55,6 +55,12 @@ Source: live PostHog MCP against `Tether Production` project `471847`
 - `notification_permission_prompt_shown`
 - `notification_permission_result`
 
+### Supporter paywall and subscriptions
+
+- Client paywall events: `supporter_prompt_viewed`, `paywall_viewed`, `paywall_offer_loaded`, `paywall_offer_load_failed`, `paywall_cta_pressed`, `paywall_purchase_started`, `paywall_purchase_cancelled`, `paywall_restore_pressed`, `paywall_restore_completed`, `paywall_closed`
+- Server-authoritative RevenueCat lifecycle events expected from the Supabase webhook: `subscription_initial_purchase`, `subscription_renewed`, `subscription_cancelled`, `subscription_uncancelled`, `subscription_transfer`, `subscription_paused`, `subscription_expired`
+- See [supporter-subscription-events.md](C:/Users/evanl/Documents/tether-analytics/analytics/supporter-subscription-events.md) for the event contract, delivery prerequisites, and interpretation rules.
+
 ### Autocaptured / system events also present
 
 - Mobile autocapture such as `Application opened`, `Application became active`, `Application backgrounded`, `Application installed`, `Application updated`, `Deep link opened`
@@ -218,5 +224,6 @@ Source: live PostHog MCP against `Tether Production` project `471847`
 ## Good Next Pulls
 
 - Add a curated event dictionary only for the events that appear in shared dashboards.
+- Validate the first `subscription_initial_purchase` delivery from RevenueCat before publishing a Supporter conversion metric.
 - Validate property presence for `streak_lost`, `streak_freeze_used`, and `notification_permission_result` before building deeper lifecycle dashboards.
 - Capture approved HogQL snippets for identity stitching and session deduplication alongside dashboard specs.
