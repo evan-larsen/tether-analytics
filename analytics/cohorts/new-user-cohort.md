@@ -4,8 +4,15 @@
 
 - PostHog saved query name: `cohort_new_users`
 - Type: materialized SQL view
-- Refresh cadence: daily (`24hour`)
+- Refresh cadence: hourly (`1hour`)
 - Project: `Tether Production`
+
+## Materialization schedule
+
+- Keep this complete-day cohort on an hourly cadence so yesterday's entrants appear soon after the project day rolls over and remain fresh throughout the day.
+- PostHog does not support choosing an exact materialization time (for example, 12:05 AM Utah time); it schedules runs by cadence only.
+- Available materialization cadences are `15min`, `30min`, `1hour`, `6hour`, `12hour`, `24hour`, `7day`, `30day`, and `never` (pause scheduled materialization).
+- Use `1hour` as the normal cadence for cohorts that feed daily metrics. Use a faster cadence only when the freshness benefit justifies the additional query and storage work.
 
 ## Columns
 

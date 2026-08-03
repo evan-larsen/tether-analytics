@@ -19,7 +19,7 @@
 ## Exact query logic
 
 - New users should come from `cohort_new_users`
-- `cohort_new_users` is a materialized rolling 90 complete-day cohort, recomputed daily
+- `cohort_new_users` is a materialized rolling 90 complete-day cohort, recomputed hourly; PostHog does not allow an exact daily run time
 - If the exact definition ever changes, treat the SQL in `cohort_new_users` as the source of truth
 - Completed onboarding and activated users should hold post-commit steps constant on `user_analytics_id`
 - Use SQL to bridge `distinct_id` entry into `user_analytics_id` once proto identity exists

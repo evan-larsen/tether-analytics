@@ -4,7 +4,7 @@ Only metrics that are currently used in an existing dashboard or in the current 
 
 | Name | Definition | Event / property logic | Identifier | Important caveat |
 | --- | --- | --- | --- | --- |
-| New users | Net-new onboarding entrants | Pull from `cohort_new_users` | `distinct_id` | Materialized rolling 90 complete-day cohort recomputed daily; check the cohort view itself for the exact SQL definition |
+| New users | Net-new onboarding entrants | Pull from `cohort_new_users` | `distinct_id` | Materialized rolling 90 complete-day cohort recomputed hourly; PostHog supports cadence but not an exact run time. Check the cohort view itself for the exact SQL definition. |
 | Completed onboarding | Users who finish start selection | `onboarding_start_selection_completed` | `user_analytics_id` | If the funnel includes first open, bridge from `distinct_id` in SQL |
 | Activated users | Post-commit onboarding users who complete a first reading session | `onboarding_intro_completed` -> first `reading_session_completed`, usually with `session_source = 'onboarding'` | `user_analytics_id` | If anchored on first open, the funnel is stitched, not purely canonical |
 | Started reading sessions | Unique reading sessions that start | `count(distinct properties.session_id)` on `reading_session_started` | `session_id` | Deduplicate raw events |
