@@ -3,8 +3,8 @@
 ## Decisions
 
 - How many active subscriptions does Tether have right now?
-- What share of today's active readers currently has a subscription?
-- What share of trailing-30-day active readers currently has a subscription?
+- What share of average daily active readers across the last 7 complete days had a subscription on those same days?
+- What share of rolling 30-day active readers across the last 30 complete days had a subscription as of yesterday?
 - How many active subscriptions does Tether have each complete day?
 - Is the subscription base growing, flat, or shrinking over time?
 - Are we looking at subscription objects rather than supporter-access counts?
@@ -12,16 +12,16 @@
 ## Approved insights
 
 - Current active subscriptions
-- % of DAU with subscription
-- % of MAU with subscription
+- % of avg 7d DAU with subscription
+- % of rolling 30d MAU with subscription
 - Active subscriptions
 
 ## Exact query logic
 
 - For the current metric, use the latest RevenueCat-backed lifecycle state per `original_transaction_id` and count subscriptions whose `expires_at` is still beyond `now()`
-- For `% of DAU with subscription`, use distinct `user_analytics_id` on today's `reading_session_completed` events as the denominator, then divide subscribed users by total DAU users
-- For `% of MAU with subscription`, use distinct `user_analytics_id` on trailing-30-day `reading_session_completed` events as the denominator, then divide subscribed users by total MAU users
-- For both percentage metrics, derive the subscribed-user numerator from the latest active subscription state and format the saved insight as `percent` in PostHog
+- For `% of avg 7d DAU with subscription`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed` per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed DAU by average DAU
+- For `% of rolling 30d MAU with subscription`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed`, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed MAU by total rolling MAU
+- For both percentage metrics, format the saved insight as `percent` in PostHog
 - Pull from `subscription_active_daily_snapshots`
 - Group by `snapshot_day`
 - Count distinct `original_transaction_id`
@@ -32,6 +32,6 @@
 
 - The current production implementation has only recently begun collecting RevenueCat lifecycle events, so older history is limited
 - The bold-number current metric is intraday and can change immediately as new lifecycle events arrive
-- The percentage metrics are also intraday because today's DAU and the current active-subscription set both change throughout the day
+- The percentage metrics now exclude today, so they move only when a completed day rolls over or the underlying hourly snapshot refreshes
 - The saved view currently retains the latest 90 complete US/Mountain snapshot days
 - Internal/test traffic is not the main risk for this metric, but RevenueCat sandbox events must remain excluded through the underlying saved view
