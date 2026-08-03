@@ -15,7 +15,7 @@ Each row records one user's membership on one `snapshot_day`.
 
 - Identifier: `user_analytics_id`
 - Qualifying event: `reading_session_started`
-- A user is assigned to this tier on snapshot day `D` when they started a reading session on at least three distinct Utah-time calendar days during `[D - 7 days, D)` and do not qualify for Active, Regular, or Near-daily.
+- A user is assigned to this tier on snapshot day `D` when they started a reading session on at least three distinct Utah-time calendar days during `[D - 7 days, D)` and do not qualify for Establishing, Active, or Near-daily.
 - `D` itself is excluded, so the calculation only uses complete days.
 - `active_days_in_prior_7d` records the number of qualifying distinct days and is expected to be at least `3`; the view also exposes 14- and 30-day active-day counts from the shared source.
 
