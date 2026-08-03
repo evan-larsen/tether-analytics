@@ -1,5 +1,7 @@
 # Habit-Forming Users Cohort
 
+For the full reader-habit cohort family and its shared snapshot behavior, see [reader-habit-cohorts.md](reader-habit-cohorts.md).
+
 ## Object
 
 - PostHog saved query name: `cohort_habit_forming_users`
