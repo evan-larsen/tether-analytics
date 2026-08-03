@@ -11,11 +11,12 @@ Track the size, composition, and daily inflow of Tether's exclusive reader-habit
 - Active: 18 to 24 reading days in the prior 30 complete days
 - Near-daily: at least 25 reading days in the prior 30 complete days
 - A user belongs to only their highest qualifying tier on a given `snapshot_day`.
+- Pre-habit is not a stored tier. It is the remaining canonical DAU: users with a `reading_session_completed` event on the active day who have no assigned habit tier for that snapshot day.
 
 ## Current insights
 
 - `Reader habit tiers - last 14 complete days`: absolute daily membership counts for all four tiers, excluding today.
-- `Reader habit tier mix - last 90 snapshot days`: 100% stacked daily tier composition across the available snapshot history.
+- `Daily active reader habit mix`: 100% stacked breakdown of every canonical DAU into Pre-habit plus the four exclusive reader-habit tiers. It uses completed days only.
 - `Reader habit tier entries - daily`: users entering each tier. An entry means the user was not in that same tier on the prior snapshot day; it includes first entries, promotions, and re-entries.
 
 ## Tier color palette
@@ -28,10 +29,12 @@ When an insight displays counts for the reader-habit tiers without another categ
 | Establishing | Teal | `#42827E` |
 | Active | Purple | `#621DA6` |
 | Near-daily | Pink | `#CE0E74` |
+| Pre-habit | Gray | `#A3A3A3` |
 
 ## Interpretation
 
 - Use absolute membership counts to understand the size of each tier.
-- Use the 100% tier mix to see whether the composition of tiered readers is improving independently of total audience growth.
+- Use the 100% DAU habit mix to see whether the composition of active readers is improving independently of total audience growth.
+- Pre-habit is calculated as canonical DAU minus users assigned to a reader-habit tier on that day. It may include brand-new or returning low-frequency readers, so it is not the same as the acquisition `New users` cohort.
 - Do not interpret daily entries as lifetime-first-time entries; the source retains a rolling 90-day history and the metric intentionally includes re-entry.
 - For implementation details and the source table, see [reader-habit-cohorts.md](../cohorts/reader-habit-cohorts.md).
