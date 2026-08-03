@@ -8,3 +8,8 @@
 - Before pushing, fetch `origin` and integrate any upstream changes. If `origin/main` has advanced, rebase the local work onto it before pushing.
 - If an integration conflict occurs, tell the user in a progress update, then resolve the conflict autonomously with best judgment while preserving the intent of both sides. Re-run relevant checks, complete the rebase, commit if needed, and push.
 - If a conflict cannot be safely resolved without a product or policy decision, stop and ask the user for direction.
+
+## Metric naming and descriptions
+
+- Keep metric and insight names short, plain, and easy to scan.
+- Do not add descriptions to PostHog metrics or insights unless the user explicitly asks for them.

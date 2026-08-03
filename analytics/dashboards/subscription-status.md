@@ -12,15 +12,15 @@
 ## Approved insights
 
 - Current active subscriptions
-- % of avg 7d DAU with subscription
-- % of rolling 30d MAU with subscription
+- 7d Avg DAU Subscribed %
+- 30d MAU Subscribed %
 - Active subscriptions
 
 ## Exact query logic
 
 - For the current metric, use the latest RevenueCat-backed lifecycle state per `original_transaction_id` and count subscriptions whose `expires_at` is still beyond `now()`
-- For `% of avg 7d DAU with subscription`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed` per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed DAU by average DAU
-- For `% of rolling 30d MAU with subscription`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed`, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed MAU by total rolling MAU
+- For `7d Avg DAU Subscribed %`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed` per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed DAU by average DAU
+- For `30d MAU Subscribed %`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed`, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed MAU by total rolling MAU
 - For both percentage metrics, format the saved insight as `percent` in PostHog
 - Pull from `subscription_active_daily_snapshots`
 - Group by `snapshot_day`
