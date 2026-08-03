@@ -24,7 +24,7 @@
 - For `7d Avg DAU Subscribed %`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed` per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed DAU by average DAU
 - For `30d MAU Subscribed %`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed`, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed MAU by total rolling MAU
 - For both percentage metrics, format the saved insight as `percent` in PostHog
-- For `Paywall Entry Point Conversion`, group `paywall_viewed` users by `entry_point`, count unique viewers, join to each user's first Production `subscription_initial_purchase`, and add a de-duplicated `Total` row across all three entry points
+- For `Paywall Entry Point Conversion`, group `paywall_viewed` users by `entry_point`, count unique viewers, join to each user's first Production `subscription_initial_purchase`, add an `Unknown` row for purchasers with no tracked paywall view in the three approved entry-point buckets, and add a de-duplicated `Total` row
 - Pull from `subscription_active_daily_snapshots`
 - Group by `snapshot_day`
 - Count distinct `original_transaction_id`
