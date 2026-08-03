@@ -16,9 +16,10 @@ Track the size, composition, and daily inflow of Tether's exclusive reader-habit
 ## Current insights
 
 - `Reader habit tiers - last 14 complete days`: absolute daily membership counts for all four tiers, excluding today.
-- `Daily active reader habit mix — count`: stacked daily counts of every canonical DAU across Pre-habit plus the four exclusive reader-habit tiers. It uses completed days only.
-- `Daily active reader habit mix — share`: the same daily breakdown normalized to 100%, so composition can be compared independently of DAU volume.
-- `Average current DAU habit mix — last 7 complete days`: a single 100% stacked bar showing the average canonical DAU composition over the last 7 complete days, using the same Pre-habit plus four-tier segmentation as the daily mix charts.
+- `Daily active reader habit mix - count`: stacked daily counts of every canonical DAU across Pre-habit plus the four exclusive reader-habit tiers. It uses completed days only.
+- `Daily active reader habit mix - share`: the same daily breakdown normalized to 100%, so composition can be compared independently of DAU volume.
+- `Average current DAU habit mix - last 7 complete days`: a single 100% stacked bar showing the average canonical DAU composition over the last 7 complete days, using the same Pre-habit plus four-tier segmentation as the daily mix charts.
+- `30-day upgrade rate by starting tier`: for each starting tier below Near-daily, the share of users who reached any higher reader-habit tier 30 days later, aggregated across all completed start days that already have a 30-day outcome.
 - `Reader habit tier entries - daily`: users entering each tier. An entry means the user was not in that same tier on the prior snapshot day; it includes first entries, promotions, and re-entries.
 
 ## Tier color palette
@@ -38,6 +39,7 @@ When an insight displays counts for the reader-habit tiers without another categ
 - Use absolute membership counts to understand the size of each tier.
 - Use the count view to follow total DAU and the absolute size of each segment. Use the share view to see whether the composition of active readers is improving independently of total audience growth.
 - Use the 7-day average share view to summarize the current DAU mix in one snapshot when you want a stable segment breakdown without day-to-day volatility.
+- Use the 30-day upgrade-rate view to judge whether lower-tier readers are compounding into stronger habits. On Monday, August 3, 2026, it can only use eligible starting days from June 28, 2026 through July 3, 2026, because later starts do not yet have a completed 30-day follow-up.
 - Pre-habit is calculated by the virtual `cohort_habit_pre_habit_readers` view as canonical DAU minus users assigned to a reader-habit tier on that day. It may include brand-new or returning low-frequency readers, so it is not the same as the acquisition `New users` cohort.
 - Do not interpret daily entries as lifetime-first-time entries; the source retains a rolling 90-day history and the metric intentionally includes re-entry.
 - For implementation details and the source table, see [reader-habit-cohorts.md](../cohorts/reader-habit-cohorts.md).
