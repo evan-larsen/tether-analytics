@@ -11,7 +11,7 @@ Track the size, composition, and daily inflow of Tether's exclusive reader-habit
 - Active: 18 to 24 reading days in the prior 30 complete days
 - Near-daily: at least 25 reading days in the prior 30 complete days
 - A user belongs to only their highest qualifying tier on a given `snapshot_day`.
-- Pre-habit is not a stored tier. It is the remaining canonical DAU: users with a `reading_session_completed` event on the active day who have no assigned habit tier for that snapshot day.
+- Pre-habit is a reusable virtual cohort, rather than a materialized tier. It is the remaining canonical DAU: users with a `reading_session_completed` event on the active day who have no assigned habit tier for that snapshot day.
 
 ## Current insights
 
@@ -36,6 +36,6 @@ When an insight displays counts for the reader-habit tiers without another categ
 
 - Use absolute membership counts to understand the size of each tier.
 - Use the count view to follow total DAU and the absolute size of each segment. Use the share view to see whether the composition of active readers is improving independently of total audience growth.
-- Pre-habit is calculated as canonical DAU minus users assigned to a reader-habit tier on that day. It may include brand-new or returning low-frequency readers, so it is not the same as the acquisition `New users` cohort.
+- Pre-habit is calculated by the virtual `cohort_habit_pre_habit_readers` view as canonical DAU minus users assigned to a reader-habit tier on that day. It may include brand-new or returning low-frequency readers, so it is not the same as the acquisition `New users` cohort.
 - Do not interpret daily entries as lifetime-first-time entries; the source retains a rolling 90-day history and the metric intentionally includes re-entry.
 - For implementation details and the source table, see [reader-habit-cohorts.md](../cohorts/reader-habit-cohorts.md).
