@@ -25,7 +25,7 @@ When an insight displays counts for the reader-habit tiers without another categ
 | Tier | Color | Hex |
 | --- | --- | --- |
 | Habit-forming | Blue | `#1D4AFF` |
-| Establishing | Violet | `#7C3AED` |
+| Establishing | Teal | `#42827E` |
 | Active | Purple | `#621DA6` |
 | Near-daily | Pink | `#CE0E74` |
 
