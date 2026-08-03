@@ -13,6 +13,7 @@
 - PostHog does not support choosing an exact materialization time (for example, 12:05 AM Utah time); it schedules runs by cadence only.
 - Available materialization cadences are `15min`, `30min`, `1hour`, `6hour`, `12hour`, `24hour`, `7day`, `30day`, and `never` (pause scheduled materialization).
 - Use `1hour` as the normal cadence for cohorts that feed daily metrics. Use a faster cadence only when the freshness benefit justifies the additional query and storage work.
+- Unless a cohort explicitly needs a different horizon, retain a rolling 90 days of cohort history.
 
 ## Columns
 

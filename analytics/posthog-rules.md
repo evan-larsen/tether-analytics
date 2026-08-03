@@ -79,3 +79,11 @@
   - dedupe by `session_id`
   - preserve current Executive retention semantics
   - stitch anonymous onboarding into post-commit lifecycle analysis
+
+## Materialized cohort snapshots
+
+- Use a materialized SQL view when cohort membership requires custom logic or historical daily membership; PostHog-native cohorts represent current membership and are not the source of truth for these historical snapshots.
+- Model historical cohorts at one row per user and `snapshot_day`. Define the lookback relative to the snapshot day and exclude the in-progress Utah-time day unless the cohort explicitly needs intraday behavior.
+- Treat rolling behavioral cohorts as daily states, not permanent labels: users can enter, exit, and re-enter them.
+- Retain the latest 90 snapshot days by default. Use a different history horizon only when the analytical requirement is explicit.
+- For completed-day cohorts used in daily reporting, use the hourly (`1hour`) materialization cadence. PostHog supports cadence, not an exact scheduled run time.
