@@ -87,3 +87,5 @@
 - Treat rolling behavioral cohorts as daily states, not permanent labels: users can enter, exit, and re-enter them.
 - Retain the latest 90 snapshot days by default. Use a different history horizon only when the analytical requirement is explicit.
 - For completed-day cohorts used in daily reporting, use the hourly (`1hour`) materialization cadence. PostHog supports cadence, not an exact scheduled run time.
+- When several named cohorts are mutually exclusive tiers, calculate their active-day counts and highest qualifying tier once in one materialized source table. Expose separate virtual cohort views that filter that source by tier.
+- For tiered segmentation, use the virtual tier views rather than independent threshold cohorts. This guarantees each user belongs to at most one tier per `snapshot_day`, so tier counts can be compared or summed safely.
