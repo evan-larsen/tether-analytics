@@ -7,6 +7,7 @@
 - What share of rolling 30-day active readers across the last 30 complete days had a subscription as of yesterday?
 - How many active subscriptions does Tether have each complete day?
 - Is the subscription base growing, flat, or shrinking over time?
+- Which paywall entry points are driving unique viewers, initial purchasers, and conversion?
 - Are we looking at subscription objects rather than supporter-access counts?
 
 ## Approved insights
@@ -15,6 +16,7 @@
 - 7d Avg DAU Subscribed %
 - 30d MAU Subscribed %
 - Active subscriptions
+- Paywall Entry Point Conversion
 
 ## Exact query logic
 
@@ -22,6 +24,7 @@
 - For `7d Avg DAU Subscribed %`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed` per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed DAU by average DAU
 - For `30d MAU Subscribed %`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` on `reading_session_completed`, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed MAU by total rolling MAU
 - For both percentage metrics, format the saved insight as `percent` in PostHog
+- For `Paywall Entry Point Conversion`, group `paywall_viewed` users by `entry_point`, count unique viewers, join to each user's first Production `subscription_initial_purchase`, and add a de-duplicated `Total` row across all three entry points
 - Pull from `subscription_active_daily_snapshots`
 - Group by `snapshot_day`
 - Count distinct `original_transaction_id`
