@@ -18,6 +18,17 @@ Track the size, composition, and daily inflow of Tether's exclusive reader-habit
 - `Reader habit tier mix - last 90 snapshot days`: 100% stacked daily tier composition across the available snapshot history.
 - `Reader habit tier entries - daily`: users entering each tier. An entry means the user was not in that same tier on the prior snapshot day; it includes first entries, promotions, and re-entries.
 
+## Tier color palette
+
+When an insight displays counts for the reader-habit tiers without another categorical breakdown, use these fixed series colors. Keep these mappings stable across dashboards rather than relying on PostHog's automatic series order.
+
+| Tier | Color | Hex |
+| --- | --- | --- |
+| Habit-forming | Blue | `#1D4AFF` |
+| Establishing | Purple | `#621DA6` |
+| Active | Orange | `#F97316` |
+| Near-daily | Pink | `#CE0E74` |
+
 ## Interpretation
 
 - Use absolute membership counts to understand the size of each tier.
