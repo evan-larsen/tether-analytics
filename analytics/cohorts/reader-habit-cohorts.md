@@ -14,6 +14,7 @@ This is a family of exclusive reader-habit tiers. Each user appears in at most o
 - `cohort_reader_habit_tier_snapshots` is the only materialized view in this family. It refreshes hourly and holds each user's active-day counts for prior 7, 14, and 30 complete days plus their assigned `habit_tier`.
 - The four named cohort views are virtual wrappers over that table. They filter `habit_tier`, making each group simple to query without duplicating event scans or materialized storage.
 - The source scans 120 days of events: a rolling 90-day snapshot history plus the longest 30-day lookback.
+- To avoid a global cross join between all session days and all snapshot days, the source expands each distinct user session day only into the 30 later snapshot days that it can affect, then aggregates the 7-, 14-, and 30-day counts.
 - Tier priority is Near-daily, then Regular, then Active, then Habit-forming. This highest-qualifying-tier assignment is the canonical segmentation rule.
 
 ## Shared behavior
