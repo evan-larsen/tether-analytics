@@ -58,7 +58,7 @@ Source: live PostHog MCP against `Tether Production` project `471847`
 ### Supporter paywall and subscriptions
 
 - Client paywall events: `supporter_prompt_viewed`, `paywall_viewed`, `paywall_offer_loaded`, `paywall_offer_load_failed`, `paywall_cta_pressed`, `paywall_purchase_started`, `paywall_purchase_cancelled`, `paywall_restore_pressed`, `paywall_restore_completed`, `paywall_closed`
-- Server-authoritative RevenueCat lifecycle events expected from the Supabase webhook: `subscription_initial_purchase`, `subscription_renewed`, `subscription_cancelled`, `subscription_uncancelled`, `subscription_transfer`, `subscription_paused`, `subscription_expired`
+- Server-authoritative RevenueCat events expected from the Supabase webhook: `subscription_initial_purchase`, `subscription_renewed`, `subscription_cancelled`, `subscription_uncancelled`, `subscription_non_renewing_purchase`, `subscription_paused`, `subscription_expired`, `subscription_billing_issue`, `subscription_product_changed`, `subscription_extended`, `subscription_refund_reversed`, `subscription_invoice_issued`, `subscription_transferred`, and `subscription_temporary_entitlement_granted`
 - See [supporter-subscription-events.md](C:/Users/evanl/Documents/tether-analytics/analytics/supporter-subscription-events.md) for the event contract, delivery prerequisites, and interpretation rules.
 
 ### Autocaptured / system events also present
@@ -212,6 +212,16 @@ Source: live PostHog MCP against `Tether Production` project `471847`
   - `method`: `google`, `email`, `apple`
   - `source`: `onboarding`, `profile`
   - `needs_profile_setup`: `true`, `false`
+
+### RevenueCat subscription events
+
+- Identifier: `user_analytics_id`; the webhook's PostHog `distinct_id` is the matching profile's analytics ID.
+- Delivery / lineage: `source = revenuecat_webhook`, `revenuecat_event_id`, `revenuecat_event_type`, `revenuecat_environment`, `$insert_id`.
+- Transaction dimensions: `product_id`, `original_transaction_id`, `transaction_id`, `store`, `period_type`, `transaction_purchased_at`, `transaction_expires_at`.
+- Financial dimensions: `transaction_price_usd`, `transaction_price_local`, `purchased_currency`, `revenue_usd`, `revenue_local`, `mrr_usd`, `subscription_period_days`, `has_charge`.
+- Lifecycle state: `subscription_state`, `cancel_reason`, `expiration_reason`, `transferred_from`, `transferred_to`.
+- Event timestamp rule: the event timestamp and `event_occurred_at` are RevenueCat's `event_timestamp_ms`; transaction dates are separate properties.
+- Only charge events can populate `$revenue` / `$currency`; use `revenuecat_environment = 'PRODUCTION'` for live financial analysis.
 
 ## Analysis Guardrails
 
