@@ -2,8 +2,9 @@
 
 ## Identity
 
-- `user_analytics_id` is the canonical post-commit user identifier.
-- `distinct_id` is only for truly pre-commit anonymous analysis.
+- `user_analytics_id` is the canonical post-commit user identifier. Always use it for user-level metrics and downstream user behavior.
+- `distinct_id` is the anonymous/install identifier. Use it for device- or install-level metrics, such as app build and OTA rollout; do not use it as the canonical user identifier.
+- A dedicated, stable device/install ID should replace `distinct_id` for device metrics if and when one is captured. Until then, `distinct_id` is the approved device/install proxy.
 - Do not treat PostHog person profiles or identified users as Tether's canonical user model.
 - SQL/HogQL can bridge anonymous entry on `distinct_id` into post-commit steps on `user_analytics_id`, but the stitch must be explicit.
 
@@ -57,12 +58,13 @@
 
 - Every retention metric must say whether it is:
   - `exact-day`
-  - `returned-on-or-after`
+  - `fixed observation window`
 - Current Executive retention semantics:
   - `D1` = exact-day
-  - `D7+` = returned on or after day 7
-  - `D14+` = returned on or after day 14
-  - `D30+` = returned on or after day 30
+  - `D7–13` = at least one event in days 7 through 13
+  - `D14–29` = at least one event in days 14 through 29
+  - `D30–59` = at least one event in days 30 through 59
+- Only include cohorts whose entire return window has completed. This gives every included new user the same opportunity to return.
 
 ## Internal/test-user limitations
 
