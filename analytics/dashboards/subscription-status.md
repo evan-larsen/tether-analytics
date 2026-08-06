@@ -13,16 +13,18 @@
 ## Approved insights
 
 - Current active subscriptions
-- 7d Avg Full DAU Subscribed %
-- 30d Full MAU Subscribed %
+- DAU Subscribed % (7d Avg Rolling)
+- MAU Subscribed % (30d Rolling)
 - Active subscriptions
 - Paywall Entry Point Conversion
+- Supporter prompt paywall rate by appearance (30d)
 
 ## Exact query logic
 
 - For the current metric, use the latest RevenueCat-backed lifecycle state per `original_transaction_id` and count subscriptions whose `expires_at` is still beyond `now()`
-- For `7d Avg Full DAU Subscribed %`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` across all events per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed full DAU by average full DAU
-- For `30d Full MAU Subscribed %`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` across all events, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed full MAU by total rolling full MAU
+- For `DAU Subscribed % (7d Avg Rolling)`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` across all events per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed full DAU by average full DAU
+- For `MAU Subscribed % (30d Rolling)`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` across all events, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed full MAU by total rolling full MAU
+- For `Supporter prompt paywall rate by appearance (30d)`, deduplicate `supporter_prompt_viewed` and prompt-origin `paywall_viewed` records by `user_analytics_id`, `reading_session_id`, and `supporter_prompt_appearance_number`; join matching prompt/paywall records and group open rate by prompt appearance number
 - For both percentage metrics, format the saved insight as `percent` in PostHog
 - For `Paywall Entry Point Conversion`, group `paywall_viewed` users by `entry_point`, count unique viewers, join to each user's first Production `subscription_initial_purchase`, add an `Unknown` row for purchasers with no tracked paywall view in the three approved entry-point buckets, and add a de-duplicated `Total` row
 - Pull from `subscription_active_daily_snapshots`
