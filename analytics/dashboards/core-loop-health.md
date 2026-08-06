@@ -8,9 +8,9 @@
 
 ## Approved insights
 
-- DAU
-- WAU
-- MAU
+- Completion DAU
+- Completion WAU
+- Completion MAU
 - Started reading sessions
 - Completed reading sessions
 - Session completion rate
@@ -22,7 +22,7 @@
 
 - Deduplicate reading sessions by `properties.session_id`
 - Canonical user metrics require `user_analytics_id` and app version `1.6.0+`
-- Active users are based on `reading_session_completed`
+- Completion DAU, Completion WAU, and Completion MAU are based on `reading_session_completed`; these are distinct from full DAU, WAU, and MAU, which use all events
 
 ## Known limitations
 
