@@ -230,6 +230,7 @@ Source: live PostHog MCP against `Tether Production` project `471847`
 - Deduplicate session metrics on `session_id`.
 - Default canonical user analysis to app version `1.6.0+`.
 - Do not assume PostHog person properties are Tether's canonical user model.
+- Use the materialized [`streak_lost`](C:/Users/evanl/Documents/tether-analytics/analytics/streak-lost-table.md:1) table for derived streak-loss analysis; it is keyed by `user_analytics_id`, not `person_id`.
 
 ## Good Next Pulls
 

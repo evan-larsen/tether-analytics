@@ -25,6 +25,7 @@
   - any-event return
   - D1 exact-day, D7+/D14+/D30+ on-or-after
 - Always label retention as exact-day or on-or-after
+- Use the materialized [`streak_lost`](C:/Users/evanl/Documents/tether-analytics/analytics/streak-lost-table.md:1) table for streak-loss volume and post-loss behavior. Do not use the client-captured `streak_lost` event for those analyses.
 
 ## Known limitations
 
