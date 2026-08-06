@@ -33,3 +33,13 @@ Example: a completion on D1 with `freeze_count = 3` permits missed days D2-D4. A
 - Join later events on `user_analytics_id` and require their timestamp/date to be after `streak_lost_at` to analyze return, renewed reading, or a rebuilt streak.
 
 Do not use the client-captured `streak_lost` event as the source for these questions: it fires when the app is opened or resumed and is not a complete loss record.
+
+## Reader-habit cohort joins
+
+The reader-habit tier snapshots are keyed by `user_analytics_id` and use Utah/Mountain `snapshot_day` values. Each snapshot excludes activity on its own day, so the cohort that includes a user's final streak-preserving reading belongs to the following snapshot day:
+
+```text
+cohort snapshot_day = last_streak_completion_utah_date + 1 day
+```
+
+Do not directly join `last_streak_completion_date` to `snapshot_day`. `last_streak_completion_date` comes from the user's local completion date, while reader-habit cohorts use Utah/Mountain days. Before building a cohort-at-loss analysis, expose `last_streak_completion_utah_date` from the final `reading_session_completed` event timestamp and use that field for the join.
