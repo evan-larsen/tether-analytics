@@ -3,7 +3,7 @@
 ## Decisions
 
 - How many active subscriptions does Tether have right now?
-- What share of average full DAU across the last 7 complete days had a subscription on those same days?
+- How does yesterday's active subscription count compare with average full DAU across the last 7 complete days?
 - What share of full rolling 30-day MAU across the last 30 complete days had a subscription as of yesterday?
 - How many active subscriptions does Tether have each complete day?
 - Is the subscription base growing, flat, or shrinking over time?
@@ -24,7 +24,7 @@
 ## Exact query logic
 
 - For the current metric, use the latest RevenueCat-backed lifecycle state per `original_transaction_id` and count subscriptions whose `expires_at` is still beyond `now()`
-- For `DAU Subscribed % (7d Avg Rolling)`, use the last 7 complete US/Mountain days only, count distinct `user_analytics_id` across all events per day, join each day to `subscription_active_daily_snapshots` on `snapshot_day` and `user_analytics_id`, then divide average subscribed full DAU by average full DAU
+- For `DAU Subscribed % (7d Avg Rolling)`, count distinct `original_transaction_id` in yesterday's `subscription_active_daily_snapshots`, calculate average daily distinct `user_analytics_id` across all events for the last 7 complete US/Mountain days, and divide the former by the latter
 - For `MAU Subscribed % (30d Rolling)`, use the last 30 complete US/Mountain days only, count distinct `user_analytics_id` across all events, anchor subscriber state to yesterday's `subscription_active_daily_snapshots`, then divide subscribed full MAU by total rolling full MAU
 - For `Supporter prompt paywall rate by appearance (30d)`, deduplicate `supporter_prompt_viewed` and prompt-origin `paywall_viewed` records by `user_analytics_id`, `reading_session_id`, and `supporter_prompt_appearance_number`; join matching prompt/paywall records, group open rate by prompt appearance number, and add a volume-weighted `Total` row
 - For `Subscribers by reading habit cohort (yesterday)`, use distinct users from yesterday's `subscription_active_daily_snapshots`; join to `cohort_reader_habit_tier_snapshots` for the same day, derive `Pre-habit` from completion DAU without a tier, and include `No reader cohort` when no cohort row exists
